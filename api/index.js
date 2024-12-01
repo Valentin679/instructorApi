@@ -23,6 +23,7 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
 const students = require('./modules/students')
 //Ученики
 app.get("/api/students/category/b", students.getAllStudentsCategoryB)
+app.post("/api/students/category/b", students.addStudent)
 
 
 // app.get("/api/users", async (req, res) => {
