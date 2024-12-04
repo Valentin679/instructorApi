@@ -15,6 +15,15 @@ module.exports.addStudent = async (req, res) => {
     console.log('req.body', req.body)
     res.send(result);
 }
+module.exports.getOneStudentById = async (req, res) => {
+    const id = req.params.id;
+    const newId = new ObjectId(id)
+    // получаем одного пользователя по id
+    const collection = db.collection("B");
+    const student = await collection.findOne({'_id': newId})
+    if(student) res.json(student);
+    else res.json.sendStatus(404);
+}
 // module.exports.getFilterOneCategory = async (req, res) => {
 //     console.log(req.query)
 //     const slug = req.params.slug;
