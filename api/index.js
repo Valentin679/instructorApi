@@ -25,7 +25,7 @@ const students = require('./modules/students')
 app.get("/api/students/category/b", students.getAllStudentsCategoryB)
 app.get("/api/students/category/b/:id", students.getOneStudentById)
 app.post("/api/students/category/b", students.addStudent)
-app.put("/api/students/category/b/:id", students.editStudentGrades)
+app.post("/api/students/category/b/edit", students.editStudentGrades)
 
 
 // app.get("/api/users", async (req, res) => {

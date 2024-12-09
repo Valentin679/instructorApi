@@ -24,15 +24,23 @@ module.exports.getOneStudentById = async (req, res) => {
 }
 
 module.exports.editStudentGrades = async (req, res) => {
-    const id = req.params.id;
-    const newId = new ObjectId(id)
+    // const id = req.params.id;
+    const id = req.body.id
+    const newId =  new ObjectId(id)
     if (!req.body) return res.sendStatus(400);
     // const oldTitle = req.body.oldTitle;
 
-    console.log('req.body', req.body)
+    // console.log('req.body', req.body)
+    // const idExercise = req.body.id
+    const slug = req.body.slug
+    const level = req.body.level
     // const newGrades = {req.body.exercise};
     // обновляем данные
-    const result = await collection.findOneAndUpdate({_id: newId}, {$set: newGrades});
+    const result = await collection.updateOne({_id: newId},
+        {$set: {'exercise.$.level': level}},
+        {applyFilters: [{"exercise.slug": slug}]}
+    );
+    console.log(result)
     res.status(200).json({result})
 }
 // module.exports.getFilterOneCategory = async (req, res) => {
