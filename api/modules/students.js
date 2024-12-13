@@ -28,26 +28,17 @@ module.exports.editStudentGrades = async (req, res) => {
     const id = req.body.id
     const newId =  new ObjectId(id)
     if (!req.body) return res.sendStatus(400);
-    // const oldTitle = req.body.oldTitle;
-
-    // console.log('req.body', req.body)
-    // const idExercise = req.body.id
     const slug = req.body.slug
     const level = req.body.level
-    // const newGrades = {req.body.exercise};
+    const name = req.body.name
+    const gradeIndex = req.body.gradeIndex
     // обновляем данные
-    const result = await collection.updateOne({_id: newId},
-        {$set: {'exercise.$.level': level}},
-        {applyFilters: [{"exercise.slug": slug}]}
-    );
-    console.log(result)
+    const student = await collection.findOne({'_id': newId});
+    let studentExercise = student.exercise
+    studentExercise[gradeIndex] = {
+        slug, name, level
+    }
+    const result = await collection.updateOne({'_id': newId}, { $set: { exercise: studentExercise } });
+    console.log(studentExercise)
     res.status(200).json({result})
 }
-// module.exports.getFilterOneCategory = async (req, res) => {
-//     console.log(req.query)
-//     const slug = req.params.slug;
-//     const collection = db.collection(slug);
-//     const result = await collection.find().toArray();
-//     res.send(result);
-//
-// }
